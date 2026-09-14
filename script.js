@@ -56,7 +56,7 @@ window.addEventListener(
 );
 
 
-/* Executa uma vez quando a página carrega */
+/* Executa uma vez quando a página carpopo*/
 
 updateHeader();
 
