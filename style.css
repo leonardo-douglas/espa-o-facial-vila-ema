@@ -1,22 +1,16 @@
 /* =========================================================
    CLÍNICA ESTÉTICA — STYLE.CSS
+   VERSÃO RESPONSIVA + OTIMIZADA PARA MOBILE
    ========================================================= */
-
-/* =========================
-   VARIÁVEIS
-   ========================= */
 
 :root {
     --black: #111111;
     --graphite: #181818;
     --dark-gray: #242424;
-
     --gray: #777777;
     --light-gray: #d8d8d8;
-
     --background: #f5f5f3;
     --white: #ffffff;
-
     --line: rgba(17, 17, 17, 0.13);
 
     --font-body: "DM Sans", Arial, sans-serif;
@@ -26,9 +20,8 @@
     --container: 1240px;
 }
 
-
 /* =========================
-   RESETttt
+   RESET
    ========================= */
 
 * {
@@ -39,6 +32,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 body {
@@ -46,6 +40,7 @@ body {
     color: var(--black);
     font-family: var(--font-body);
     overflow-x: hidden;
+    width: 100%;
 }
 
 body.menu-open {
@@ -61,6 +56,12 @@ button {
     font-family: inherit;
 }
 
+/* Evita elementos muito grandes de criarem overflow */
+img,
+svg,
+iframe {
+    max-width: 100%;
+}
 
 /* =========================
    CONTAINER
@@ -71,7 +72,6 @@ button {
     margin: 0 auto;
 }
 
-
 /* =========================
    HEADER
    ========================= */
@@ -79,13 +79,11 @@ button {
 .header {
     position: fixed;
     z-index: 1000;
-
     top: 0;
     left: 0;
 
     width: 100%;
     height: 84px;
-
     padding: 0 40px;
 
     display: flex;
@@ -94,21 +92,16 @@ button {
     color: var(--white);
 
     transition:
-        height 0.35s ease,
-        background 0.35s ease,
-        box-shadow 0.35s ease;
+        height 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .header.scrolled {
     height: 68px;
-
-    background: rgba(17, 17, 17, 0.92);
-
-    backdrop-filter: blur(18px);
-
+    background: rgba(17, 17, 17, 0.94);
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
 }
-
 
 /* =========================
    LOGO
@@ -117,14 +110,14 @@ button {
 .logo {
     display: inline-flex;
     align-items: center;
-
     gap: 11px;
 
     font-family: var(--font-title);
     font-size: 11px;
     font-weight: 700;
-
     letter-spacing: 0.08em;
+
+    flex-shrink: 0;
 }
 
 .logo-mark {
@@ -139,12 +132,13 @@ button {
     font-family: var(--font-title);
     font-size: 10px;
     font-weight: 800;
+
+    flex-shrink: 0;
 }
 
 .logo b {
     font-weight: 800;
 }
-
 
 /* =========================
    NAVEGAÇÃO
@@ -179,7 +173,6 @@ button {
     content: "";
 
     position: absolute;
-
     left: 0;
     bottom: -7px;
 
@@ -198,7 +191,6 @@ button {
 .nav a:hover::after {
     width: 100%;
 }
-
 
 /* =========================
    BOTÃO HEADER
@@ -219,13 +211,14 @@ button {
     transition:
         background 0.3s ease,
         color 0.3s ease;
+
+    flex-shrink: 0;
 }
 
 .header-cta:hover {
     background: var(--white);
     color: var(--black);
 }
-
 
 /* =========================
    MENU MOBILE
@@ -247,6 +240,8 @@ button {
     justify-content: center;
 
     gap: 6px;
+
+    flex-shrink: 0;
 }
 
 .menu-toggle i {
@@ -267,7 +262,6 @@ button {
 .menu-toggle.active i:last-child {
     transform: rotate(-45deg) translate(2px, -3px);
 }
-
 
 /* =========================================================
    HERO
@@ -291,12 +285,8 @@ button {
     text-align: center;
 }
 
-
-/* Fundo */
-
 .hero-bg {
     position: absolute;
-
     inset: 0;
 
     background:
@@ -328,9 +318,6 @@ button {
         0 0 0 90px rgba(255, 255, 255, 0.015),
         0 0 0 180px rgba(255, 255, 255, 0.01);
 }
-
-
-/* Conteúdo */
 
 .hero-content {
     position: relative;
@@ -382,7 +369,6 @@ button {
     line-height: 1.8;
 }
 
-
 /* =========================
    HERO BOTÕES
    ========================= */
@@ -423,7 +409,6 @@ button {
 
 .button.light {
     background: var(--background);
-
     color: var(--black);
 }
 
@@ -442,7 +427,6 @@ button {
 .text-link:hover {
     color: var(--white);
 }
-
 
 /* =========================
    HERO RODAPÉ
@@ -467,7 +451,6 @@ button {
     letter-spacing: 0.15em;
 }
 
-
 /* =========================================================
    SEÇÕES
    ========================================================= */
@@ -476,6 +459,9 @@ button {
     padding: 125px 0;
 }
 
+section {
+    scroll-margin-top: 90px;
+}
 
 /* =========================================================
    EXPERIÊNCIA
@@ -554,7 +540,6 @@ button {
     line-height: 1.9;
 }
 
-
 /* =========================
    LINK
    ========================= */
@@ -588,7 +573,6 @@ button {
 .arrow-link:hover span {
     transform: translateX(5px);
 }
-
 
 /* =========================
    CARD
@@ -630,7 +614,6 @@ button {
     line-height: 1.6;
 }
 
-
 /* =========================================================
    FRASE DE IMPACTO
    ========================================================= */
@@ -644,6 +627,9 @@ button {
 }
 
 .statement p {
+    max-width: 1000px;
+    margin: 0 auto;
+
     font-family: var(--font-title);
     font-size: clamp(25px, 4vw, 53px);
     font-weight: 500;
@@ -656,7 +642,6 @@ button {
 .statement strong {
     font-weight: 800;
 }
-
 
 /* =========================================================
    SERVIÇOS
@@ -701,8 +686,9 @@ button {
     line-height: 1.8;
 }
 
-
-/* Lista */
+/* =========================
+   LISTA
+   ========================= */
 
 .service-list {
     margin-top: 65px;
@@ -715,7 +701,7 @@ button {
 
     grid-template-columns:
         60px
-        1fr
+        minmax(0, 1fr)
         30px;
 
     gap: 20px;
@@ -760,7 +746,6 @@ button {
 .service-item b {
     font-size: 19px;
 }
-
 
 /* =========================================================
    BLOCO VISUAL
@@ -835,7 +820,6 @@ button {
     letter-spacing: -0.07em;
 }
 
-
 /* =========================================================
    BENEFÍCIOS
    ========================================================= */
@@ -889,7 +873,6 @@ button {
 
     line-height: 1.7;
 }
-
 
 /* =========================================================
    DEPOIMENTOS
@@ -972,7 +955,6 @@ button {
     letter-spacing: 0.1em;
 }
 
-
 /* =========================================================
    CTA
    ========================================================= */
@@ -1018,7 +1000,6 @@ button {
     margin-top: 32px;
 }
 
-
 /* =========================================================
    LOCALIZAÇÃO
    ========================================================= */
@@ -1060,7 +1041,6 @@ button {
     line-height: 1.9;
 }
 
-
 /* =========================
    MAPA
    ========================= */
@@ -1078,8 +1058,8 @@ button {
     height: 100%;
 
     border: 0;
+    display: block;
 }
-
 
 /* =========================================================
    FOOTER
@@ -1135,6 +1115,8 @@ button {
 
     justify-content: space-between;
 
+    gap: 20px;
+
     padding-top: 20px;
 
     border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -1147,7 +1129,6 @@ button {
 
     letter-spacing: 0.12em;
 }
-
 
 /* =========================================================
    BOTÃO FLUTUANTE WHATSAPP
@@ -1169,11 +1150,9 @@ button {
     justify-content: center;
 
     background: #25D366;
-
     color: #ffffff;
 
     border: none;
-
     border-radius: 50%;
 
     box-shadow:
@@ -1200,7 +1179,584 @@ button {
     display: block;
 }
 
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .container {
+        width: min(calc(100% - 48px), var(--container));
+    }
+
+    .header {
+        padding: 0 24px;
+    }
+
+    .nav {
+        gap: 18px;
+        margin-right: 18px;
+    }
+
+    .intro-grid {
+        grid-template-columns: 120px minmax(0, 1fr);
+        gap: 40px;
+    }
+
+    .intro-card {
+        grid-column: 2;
+        margin-top: 30px;
+    }
+
+    .section-heading {
+        grid-template-columns: 1fr 280px;
+        gap: 35px;
+    }
+
+    .location-grid {
+        grid-template-columns: 1fr 1.2fr;
+        gap: 40px;
+    }
+
+    .footer-top {
+        gap: 30px;
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 768px) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    body.menu-open {
+        overflow: hidden;
+        touch-action: none;
+    }
+
+    .container {
+        width: calc(100% - 40px);
+        max-width: none;
+    }
+
+    /* =========================
+       HEADER MOBILE
+       ========================= */
+
+    .header,
+    .header.scrolled {
+        height: 68px;
+        padding: 0 20px;
+
+        background: rgba(17, 17, 17, 0.96);
+
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    .logo {
+        font-size: 10px;
+        gap: 9px;
+    }
+
+    .logo-mark {
+        width: 32px;
+        height: 32px;
+        font-size: 9px;
+    }
+
+    .header-cta {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+        margin-left: auto;
+        position: relative;
+        z-index: 1002;
+    }
+
+    .nav {
+        position: fixed;
+
+        top: 68px;
+        left: 0;
+
+        width: 100%;
+        height: calc(100svh - 68px);
+
+        margin: 0;
+        padding: 45px 25px 80px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        gap: 0;
+
+        background: rgba(17, 17, 17, 0.98);
+
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+
+        transform: translateY(-10px);
+
+        transition:
+            opacity 0.25s ease,
+            transform 0.25s ease,
+            visibility 0.25s ease;
+
+        overflow-y: auto;
+    }
+
+    .nav.open {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .nav a {
+        width: 100%;
+        padding: 18px 0;
+
+        text-align: center;
+
+        font-size: 12px;
+
+        opacity: 0.9;
+
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav a::after {
+        display: none;
+    }
+
+    /* =========================
+       HERO MOBILE
+       ========================= */
+
+    .hero {
+        min-height: 100svh;
+        padding: 90px 20px 100px;
+    }
+
+    .hero-bg::before {
+        width: 100vw;
+        height: 100vw;
+
+        right: -45vw;
+        top: -20vw;
+
+        box-shadow:
+            0 0 0 50px rgba(255, 255, 255, 0.015),
+            0 0 0 100px rgba(255, 255, 255, 0.01);
+    }
+
+    .hero-content {
+        width: 100%;
+        max-width: 100%;
+        padding-top: 0;
+    }
+
+    .eyebrow {
+        font-size: 8px;
+        letter-spacing: 0.15em;
+    }
+
+    .hero h1 {
+        margin-top: 20px;
+
+        font-size: clamp(42px, 13vw, 65px);
+
+        line-height: 0.94;
+
+        letter-spacing: -0.065em;
+    }
+
+    .hero-description {
+        max-width: 330px;
+
+        margin-top: 22px;
+
+        font-size: 13px;
+
+        line-height: 1.7;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+
+        gap: 18px;
+
+        margin-top: 28px;
+    }
+
+    .button {
+        justify-content: center;
+
+        min-height: 52px;
+
+        padding: 16px 20px;
+
+        gap: 16px;
+
+        font-size: 9px;
+    }
+
+    .text-link {
+        font-size: 11px;
+    }
+
+    .hero-bottom {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+
+        font-size: 7px;
+
+        letter-spacing: 0.1em;
+    }
+
+    /* =========================
+       SEÇÕES
+       ========================= */
+
+    .section {
+        padding: 80px 0;
+    }
+
+    section {
+        scroll-margin-top: 78px;
+    }
+
+    /* =========================
+       EXPERIÊNCIA
+       ========================= */
+
+    .intro-grid {
+        display: flex;
+        flex-direction: column;
+
+        gap: 30px;
+    }
+
+    .section-label {
+        font-size: 8px;
+    }
+
+    .intro-copy {
+        max-width: 100%;
+    }
+
+    .intro h2 {
+        margin-top: 14px;
+
+        font-size: clamp(40px, 12vw, 58px);
+
+        line-height: 0.96;
+    }
+
+    .intro-copy p {
+        max-width: 100%;
+
+        margin-top: 22px;
+
+        font-size: 14px;
+
+        line-height: 1.8;
+    }
+
+    .arrow-link {
+        margin-top: 25px;
+
+        gap: 18px;
+    }
+
+    .intro-card {
+        width: 100%;
+
+        min-height: 200px;
+
+        margin-top: 5px;
+
+        padding: 24px;
+    }
+
+    /* =========================
+       STATEMENT
+       ========================= */
+
+    .statement {
+        padding: 60px 20px;
+    }
+
+    .statement p {
+        font-size: clamp(25px, 8vw, 38px);
+    }
+
+    /* =========================
+       SERVIÇOS
+       ========================= */
+
+    .section-heading {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .section-heading h2 {
+        margin-top: 14px;
+
+        font-size: clamp(40px, 12vw, 58px);
+    }
+
+    .section-heading > p {
+        max-width: 100%;
+
+        font-size: 13px;
+
+        line-height: 1.75;
+    }
+
+    .service-list {
+        margin-top: 40px;
+    }
+
+    .service-item {
+        grid-template-columns: 35px minmax(0, 1fr) 20px;
+
+        gap: 12px;
+
+        padding: 22px 0;
+    }
+
+    .service-item:hover {
+        padding-left: 0;
+    }
+
+    .service-item > span {
+        font-size: 8px;
+    }
+
+    .service-item h3 {
+        font-size: 17px;
+    }
+
+    .service-item p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .service-item b {
+        font-size: 16px;
+    }
+
+    /* =========================
+       BLOCO VISUAL
+       ========================= */
+
+    .visual-break {
+        height: 420px;
+    }
+
+    .visual-break::before {
+        width: 110vw;
+        height: 110vw;
+
+        right: -55vw;
+        top: -25vw;
+
+        box-shadow:
+            0 0 0 60px rgba(255, 255, 255, 0.01),
+            0 0 0 120px rgba(255, 255, 255, 0.01);
+    }
+
+    .visual-caption {
+        left: 20px;
+        right: 20px;
+        bottom: 50px;
+    }
+
+    .visual-caption strong {
+        margin-top: 14px;
+
+        font-size: clamp(48px, 15vw, 70px);
+
+        line-height: 0.88;
+    }
+
+    /* =========================
+       BENEFÍCIOS
+       ========================= */
+
+    .benefit-grid {
+        grid-template-columns: 1fr;
+
+        margin-top: 40px;
+    }
+
+    .benefit {
+        min-height: auto;
+
+        padding: 28px 24px;
+    }
+
+    .benefit h3 {
+        margin-top: 35px;
+
+        font-size: 27px;
+    }
+
+    .benefit p {
+        max-width: 100%;
+
+        font-size: 13px;
+    }
+
+    /* =========================
+       DEPOIMENTOS
+       ========================= */
+
+    .testimonial-grid {
+        grid-template-columns: 1fr;
+
+        margin-top: 40px;
+    }
+
+    .testimonial {
+        min-height: 270px;
+
+        padding: 28px 24px;
+    }
+
+    .testimonial blockquote {
+        margin: 45px 0;
+
+        font-size: 15px;
+    }
+
+    /* =========================
+       CTA
+       ========================= */
+
+    .cta-section {
+        padding: 90px 20px;
+    }
+
+    .cta-section h2 {
+        margin-top: 18px;
+
+        font-size: clamp(48px, 14vw, 70px);
+
+        line-height: 0.9;
+    }
+
+    .cta-section > div > p:not(.eyebrow) {
+        max-width: 330px;
+
+        margin-top: 20px;
+
+        font-size: 13px;
+    }
+
+    .cta-section .button {
+        margin-top: 28px;
+    }
+
+    /* =========================
+       LOCALIZAÇÃO
+       ========================= */
+
+    .location-grid {
+        display: flex;
+        flex-direction: column;
+
+        gap: 40px;
+
+        align-items: stretch;
+    }
+
+    .location h2 {
+        margin-top: 14px;
+
+        font-size: clamp(40px, 12vw, 58px);
+    }
+
+    .address {
+        margin-top: 22px;
+
+        font-size: 13px;
+
+        line-height: 1.8;
+    }
+
+    /* =========================
+       MAPA
+       ========================= */
+
+    .map-wrap {
+        width: 100%;
+        height: 350px;
+
+        filter: none;
+    }
+
+    .map-wrap iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    .footer {
+        padding: 55px 0 20px;
+    }
+
+    .footer-top {
+        display: flex;
+        flex-direction: column;
+
+        gap: 35px;
+
+        padding-bottom: 45px;
+    }
+
+    .footer-top p {
+        max-width: 320px;
+
+        font-size: 12px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 10px;
+
+        font-size: 7px;
+
+        line-height: 1.5;
+    }
+
+    /* =========================
+       WHATSAPP
+       ========================= */
 
     .floating-whatsapp {
         width: 56px;
@@ -1208,10 +1764,106 @@ button {
 
         right: 18px;
         bottom: 18px;
+
+        box-shadow:
+            0 7px 20px rgba(0, 0, 0, 0.22);
     }
 
     .floating-whatsapp svg {
         width: 30px;
         height: 30px;
+    }
+}
+
+/* =========================================================
+   CELULARES PEQUENOS
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+    .container {
+        width: calc(100% - 32px);
+    }
+
+    .header {
+        padding: 0 16px;
+    }
+
+    .hero {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .hero-description {
+        font-size: 12px;
+    }
+
+    .hero-bottom {
+        left: 16px;
+        right: 16px;
+    }
+
+    .section {
+        padding: 70px 0;
+    }
+
+    .service-item {
+        grid-template-columns: 28px minmax(0, 1fr) 16px;
+
+        gap: 8px;
+    }
+
+    .service-item h3 {
+        font-size: 16px;
+    }
+
+    .service-item p {
+        font-size: 11px;
+    }
+
+    .intro-card {
+        padding: 22px;
+    }
+
+    .visual-break {
+        height: 380px;
+    }
+
+    .testimonial {
+        min-height: 250px;
+    }
+
+    .map-wrap {
+        height: 320px;
+    }
+
+    .floating-whatsapp {
+        right: 15px;
+        bottom: 15px;
+
+        width: 53px;
+        height: 53px;
+    }
+}
+
+/* =========================================================
+   REDUÇÃO DE MOVIMENTO
+   Ajuda aparelhos mais fracos e usuários que
+   preferem menos animações.
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }

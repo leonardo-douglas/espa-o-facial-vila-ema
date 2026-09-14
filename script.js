@@ -1,5 +1,6 @@
 /* =========================================================
    CLÍNICA ESTÉTICA — SCRIPT.JS
+   VERSÃO OTIMIZADA PARA DESKTOP + MOBILE
    ========================================================= */
 
 
@@ -12,19 +13,18 @@ const whatsappNumber = "5512996951062";
 const whatsappMessage =
     "Olá! Gostaria de agendar uma avaliação na clínica de estética.";
 
+const whatsappURL =
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
 
 /* Coloca o link do WhatsApp em todos os botões */
 
 document.querySelectorAll(".js-whatsapp").forEach((link) => {
 
-    const whatsappURL =
-        `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
-
     link.href = whatsappURL;
-
     link.target = "_blank";
+    link.rel = "noopener noreferrer";
 
-    link.rel = "noopener";
 });
 
 
@@ -34,31 +34,34 @@ document.querySelectorAll(".js-whatsapp").forEach((link) => {
 
 const header = document.querySelector(".header");
 
-
 function updateHeader() {
 
+    if (!header) return;
+
     if (window.scrollY > 40) {
-
         header.classList.add("scrolled");
-
     } else {
-
         header.classList.remove("scrolled");
-
     }
+
 }
 
 
-window.addEventListener(
-    "scroll",
-    updateHeader,
-    { passive: true }
-);
+/* Usa passive para não bloquear o scroll */
 
+if (header) {
 
-/* Executa uma vez quando a página carpopo*/
+    window.addEventListener(
+        "scroll",
+        updateHeader,
+        {
+            passive: true
+        }
+    );
 
-updateHeader();
+    updateHeader();
+
+}
 
 
 /* =========================================================
@@ -66,40 +69,81 @@ updateHeader();
    ========================================================= */
 
 const menuToggle = document.querySelector(".menu-toggle");
-
 const nav = document.querySelector(".nav");
 
 
-if (menuToggle) {
+if (menuToggle && nav) {
 
     menuToggle.addEventListener("click", () => {
 
-        nav.classList.toggle("open");
+        const isOpen = nav.classList.toggle("open");
 
-        menuToggle.classList.toggle("active");
+        menuToggle.classList.toggle(
+            "active",
+            isOpen
+        );
 
-        document.body.classList.toggle("menu-open");
+        menuToggle.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+
+        document.body.classList.toggle(
+            "menu-open",
+            isOpen
+        );
+
+    });
+
+
+    /* Fecha o menu quando clicar em um link */
+
+    document.querySelectorAll(".nav a").forEach((link) => {
+
+        link.addEventListener("click", () => {
+
+            nav.classList.remove("open");
+
+            menuToggle.classList.remove("active");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            document.body.classList.remove(
+                "menu-open"
+            );
+
+        });
+
+    });
+
+
+    /* Fecha o menu apertando ESC */
+
+    document.addEventListener("keydown", (event) => {
+
+        if (event.key === "Escape") {
+
+            nav.classList.remove("open");
+
+            menuToggle.classList.remove("active");
+
+            menuToggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            document.body.classList.remove(
+                "menu-open"
+            );
+
+        }
 
     });
 
 }
-
-
-/* Fecha o menu quando clicar em algum link */
-
-document.querySelectorAll(".nav a").forEach((link) => {
-
-    link.addEventListener("click", () => {
-
-        nav.classList.remove("open");
-
-        menuToggle.classList.remove("active");
-
-        document.body.classList.remove("menu-open");
-
-    });
-
-});
 
 
 /* =========================================================
@@ -110,36 +154,56 @@ const revealElements =
     document.querySelectorAll(".reveal");
 
 
-const revealObserver =
-    new IntersectionObserver(
-        (entries) => {
+/*
+   Se o navegador não suportar IntersectionObserver,
+   mostra tudo normalmente.
+*/
 
-            entries.forEach((entry) => {
+if ("IntersectionObserver" in window) {
 
-                if (entry.isIntersecting) {
+    const revealObserver =
+        new IntersectionObserver(
+            (entries, observer) => {
 
-                    entry.target.classList.add("visible");
+                entries.forEach((entry) => {
 
-                    revealObserver.unobserve(
-                        entry.target
-                    );
+                    if (entry.isIntersecting) {
 
-                }
+                        entry.target.classList.add(
+                            "visible"
+                        );
 
-            });
+                        observer.unobserve(
+                            entry.target
+                        );
 
-        },
-        {
-            threshold: 0.12
-        }
-    );
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.08,
+                rootMargin: "0px 0px -40px 0px"
+            }
+        );
 
 
-revealElements.forEach((element) => {
+    revealElements.forEach((element) => {
 
-    revealObserver.observe(element);
+        revealObserver.observe(element);
 
-});
+    });
+
+} else {
+
+    revealElements.forEach((element) => {
+
+        element.classList.add("visible");
+
+    });
+
+}
 
 
 /* =========================================================
@@ -153,23 +217,63 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         const targetID =
             anchor.getAttribute("href");
 
+        if (
+            !targetID ||
+            targetID === "#"
+        ) {
+            return;
+        }
+
         const target =
             document.querySelector(targetID);
-
 
         if (!target) {
             return;
         }
 
-
         event.preventDefault();
 
-
         target.scrollIntoView({
-            behavior: "smooth",
+            behavior:
+                window.matchMedia(
+                    "(prefers-reduced-motion: reduce)"
+                ).matches
+                    ? "auto"
+                    : "smooth",
+
             block: "start"
         });
 
     });
+
+});
+
+
+/* =========================================================
+   FECHA MENU SE A TELA VOLTAR PARA DESKTOP
+   ========================================================= */
+
+window.addEventListener("resize", () => {
+
+    if (
+        window.innerWidth > 768 &&
+        nav &&
+        menuToggle
+    ) {
+
+        nav.classList.remove("open");
+
+        menuToggle.classList.remove("active");
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        document.body.classList.remove(
+            "menu-open"
+        );
+
+    }
 
 });
